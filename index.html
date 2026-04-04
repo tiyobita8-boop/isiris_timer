@@ -2,10 +2,6 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>シンプルタイマー</title><!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
 <title>シンプルタイマー</title>
 </head>
 
@@ -30,127 +26,6 @@
 <button onclick="setMode(60)">1:00</button>
 <button onclick="setMode(90)">1:30</button>
 <button onclick="setMode(120)">2:00</button>
-<button onclick="setMode(150)">2:30</button>
-<button onclick="setMode(300)">5:00</button>
-<button onclick="setMode(500)">8:20</button>
-
-<br><br>
-
-<button onclick="start()">▶ スタート</button>
-<button onclick="stop()">⏹ ストップ</button>
-<button onclick="reset()">🔄 リセット</button>
-
-<script>
-
-let timerInterval;
-let audioCtx;
-
-let duration = 10;
-let remaining = 10;
-
-// 🔔終了音（チンチン）
-function playEndSound(){
-  for(let i = 0; i < 2; i++){
-    setTimeout(() => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.frequency.value = 2000;
-      gain.gain.setValueAtTime(1, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-
-      osc.start(audioCtx.currentTime);
-      osc.stop(audioCtx.currentTime + 0.3);
-
-    }, i * 300);
-  }
-}
-
-function updateTimer(){
-  let min = Math.floor(remaining / 60);
-  let sec = remaining % 60;
-
-  document.getElementById("timer").innerText =
-    min + ":" + sec.toString().padStart(2, '0');
-
-  if(remaining <= 0){
-    stop();
-    playEndSound();
-    return;
-  }
-
-  remaining--;
-}
-
-function start(){
-  if(timerInterval) return;
-
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-  document.getElementById("status").innerText = "再生中";
-
-  updateTimer();
-  timerInterval = setInterval(updateTimer, 1000);
-}
-
-function stop(){
-  clearInterval(timerInterval);
-  timerInterval = null;
-
-  document.getElementById("status").innerText = "停止中";
-}
-
-function reset(){
-  stop();
-  remaining = duration;
-  updateDisplay();
-}
-
-function setMode(sec){
-  stop();
-  duration = sec;
-  remaining = sec;
-  updateDisplay();
-}
-
-function updateDisplay(){
-  let min = Math.floor(remaining / 60);
-  let sec = remaining % 60;
-
-  document.getElementById("timer").innerText =
-    min + ":" + sec.toString().padStart(2, '0');
-}
-
-</script>
-
-</body>
-</html>
-
-</head>
-
-<body style="text-align:center; font-family:sans-serif;">
-
-<h1>⏱ タイマー</h1>
-
-<p style="color:red; font-weight:bold;">
-※ iPhoneで音が出ない場合は、サイレントモード（消音）をオフにしてください
-</p>
-
-<h2 id="status">停止中</h2>
-<h2 id="timer">0:10</h2>
-
-<br>
-
-<!-- 時間ボタン -->
-<button onclick="setMode(10)">0:10</button>
-<button onclick="setMode(30)">0:30</button>
-<button onclick="setMode(40)">0:40</button>
-<button onclick="setMode(45)">0:45</button>
-<button onclick="setMode(60)">1:00</button>
-<button onclick="setMode(90)">1:30</button>
 <button onclick="setMode(150)">2:30</button>
 <button onclick="setMode(300)">5:00</button>
 <button onclick="setMode(500)">8:20</button>
