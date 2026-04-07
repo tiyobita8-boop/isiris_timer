@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>シンプルタイマー</title>
+<style>
+button {
+  font-size: 24px;
+  padding: 30px 60px;
+  margin: 10px;
+}
+</style>
 </head>
 
 <body style="text-align:center; font-family:sans-serif;">
@@ -18,14 +25,12 @@
 
 <br>
 
-<!-- 時間ボタン -->
 <button onclick="setMode(10)">0:10</button>
 <button onclick="setMode(30)">0:30</button>
 <button onclick="setMode(40)">0:40</button>
 <button onclick="setMode(45)">0:45</button>
 <button onclick="setMode(60)">1:00</button>
 <button onclick="setMode(90)">1:30</button>
-<button onclick="setMode(120)">2:00</button>
 <button onclick="setMode(150)">2:30</button>
 <button onclick="setMode(300)">5:00</button>
 <button onclick="setMode(500)">8:20</button>
@@ -44,9 +49,8 @@ let audioCtx;
 let duration = 10;
 let remaining = 10;
 
-// 🔔終了音（チンチン）
 function playEndSound(){
-  for(let i = 0; i < 2; i++){
+  for(let i = 0; i < 10; i++){
     setTimeout(() => {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
